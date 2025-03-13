@@ -153,3 +153,8 @@ input[readonly] {
 .form-text {
     font-size: 0.9em;
 }
+
+.card { transition: transform 0.2s; }
+.card:hover { transform: translateY(-3px); }
+.list-group-item-action { transition: all 0.2s; }
+.table-hover tbody tr:hover { background-color: #f8f9fa; }
