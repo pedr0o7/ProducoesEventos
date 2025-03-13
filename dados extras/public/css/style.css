@@ -1,0 +1,31 @@
+:root {
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --success: #27ae60;
+}
+
+.card-event {
+    transition: transform 0.3s;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.card-event:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,.1);
+}
+
+.qr-code {
+    width: 200px;
+    height: 200px;
+    border: 2px solid #ddd;
+}
+
+.admin-nav {
+    background: var(--primary);
+    padding: 1rem;
+}
+
+.admin-nav a {
+    color: white !important;
+    margin-right: 1.5rem;
+}

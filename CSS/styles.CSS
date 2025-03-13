@@ -1,0 +1,155 @@
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.form-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin: 2rem auto;
+    width: 100%;
+    max-width: 800px;
+}
+
+.cep-group {
+    display: flex;
+    gap: 10px;
+}
+
+.cep-group input {
+    flex: 1;
+}
+
+h1, h3 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.btn-success {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+/* Login específico */
+.login-links {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.login-links a {
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.login-links a:hover {
+    color: #3498db;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+    padding: 0.75rem 2rem;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+/* Alertas personalizados */
+.alert {
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.alert-success {
+    border-color: #2ecc71;
+}
+
+.alert-danger {
+    border-color: #e74c3c;
+}
+
+/* Dashboard */
+.dashboard-body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #2c3e50;
+    color: #fff;
+    transition: all 0.3s;
+    min-height: 100vh;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #1a252f;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li a {
+    padding: 10px 20px;
+    color: #fff;
+    display: block;
+    text-decoration: none;
+}
+
+#sidebar ul li a:hover {
+    background: #34495e;
+}
+
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+/* Redefinição de Senha */
+.password-strength {
+    height: 5px;
+    margin-top: 5px;
+    background-color: #e9ecef;
+}
+
+.password-strength div {
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.form-text {
+    font-size: 0.9em;
+}
