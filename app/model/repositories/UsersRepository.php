@@ -1,5 +1,5 @@
 <?php
-require_once "Conexao.php";
+require_once "Database.php";
 require_once '../model/DTO/UsersDTO.php';
 
 class UsersDAO
@@ -8,7 +8,7 @@ class UsersDAO
     public $pdo = null;
     public function __construct()
     {
-        $this->pdo = Conexao::getInstance();
+        $this->pdo = Database::getInstance();
     }
     public function cadastrarUsers(UsersDTO $usersDTO
     ) {
@@ -115,5 +115,16 @@ class UsersDAO
         $stmt->bindValue(2, $users["email"]);
         $stmt->execute();
         return $stmt->execute();
+    }
+
+    public function getTotalUsers() {
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM users");
+        return $stmt->fetchColumn();
+
+    }
+
+    public function getAllUsers() {
+        $stmt = $this->pdo->query("SELECT * FROM users");
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'UsersDTO');
     }
 }

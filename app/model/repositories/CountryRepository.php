@@ -1,6 +1,6 @@
 <?php 
 
-    require_once "Conexao.php";
+    require_once "Database.php";
     require_once "../model/DTO/CountryDTO.php";
     class CountryDAO{
         //ativar conexão com banco
@@ -10,7 +10,7 @@
         public $pdo = null;
 
         public function __construct(){
-            $this->pdo = Conexao::getInstance();
+            $this->pdo = Database::getInstance();
         }
 
         public function cadastrarCountry(CountryDTO $countryDTO){

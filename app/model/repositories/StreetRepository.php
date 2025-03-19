@@ -1,8 +1,8 @@
 <?php 
 
-    require_once "Conexao.php";
-    require_once "../model/DTO/AddressDTO.php";
-    class AddressDAO{
+    require_once "Database.php";
+    require_once "../model/DTO/StreetDTO.php";
+    class StreetDAO{
         //ativar conexão com banco
         //cadastrar pais
         //listar pais
@@ -10,17 +10,16 @@
         public $pdo = null;
 
         public function __construct(){
-            $this->pdo = Conexao::getInstance();
+            $this->pdo = Database::getInstance();
         }
 
-        public function cadastrarAddress(AddressDTO $addressDTO){
+        public function cadastrarStreet(StreetDTO $streetDTO){
             try{
-                $sql = "INSERT INTO address (address, zip_code, city_id) VALUES (?,?,?)";
+                $sql = "INSERT INTO street (logradouro,city_id) VALUES (?,?)";
                 $stmt = $this->pdo->prepare($sql);
-                $address = $addressDTO->getAddress();
-                $stmt->bindValue(1, $address["address"]);
-                $stmt->bindValue(2, $address["zip_code"]);
-                $stmt->bindValue(3, $address["city_id"]);
+                $street = $streetDTO->getStreet();
+                $stmt->bindValue(1, $street["logradouro"]);
+                $stmt->bindValue(2, $street["city_id"]);
                 $returno= $stmt->execute();
                 return $returno;
             }
@@ -29,13 +28,13 @@
             }
         }
             
-        public function findByAddress($addressDTO) {
+        public function findByStreet($streetDTO) {
            try{
-            $sql = "SELECT * FROM address WHERE zip_code = ? and city_id =?";
+            $sql = "SELECT * FROM street WHERE logradouro = ? and city_id = ?";
             $stmt = $this->pdo->prepare($sql);
-            $address = $addressDTO->getAddress();
-            $stmt->bindValue(1, $address["zip_code"]);
-            $stmt->bindValue(2, $address["city_id"]);
+            $street = $streetDTO->getStreet();
+            $stmt->bindValue(1, $street["logradouro"]);
+            $stmt->bindValue(2, $street["city_id"]);
             $stmt->execute();
             $returno= $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $returno;

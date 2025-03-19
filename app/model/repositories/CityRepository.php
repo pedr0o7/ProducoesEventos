@@ -1,8 +1,8 @@
 <?php 
 
-    require_once "Conexao.php";
-    require_once "../model/DTO/StateDTO.php";
-    class StateDAO{
+    require_once "Database.php";
+    require_once "../model/DTO/CityDTO.php";
+    class CityDAO{
         //ativar conexão com banco
         //cadastrar pais
         //listar pais
@@ -10,17 +10,16 @@
         public $pdo = null;
 
         public function __construct(){
-            $this->pdo = Conexao::getInstance();
+            $this->pdo = Database::getInstance();
         }
 
-        public function cadastrarState(StateDTO $stateDTO){
+        public function cadastrarCity(CityDTO $cityDTO){
             try{
-                $sql = "INSERT INTO state (state, country_id) VALUES (?,?)";
+                $sql = "INSERT INTO city (city, state_id) VALUES (?,?)";
                 $stmt = $this->pdo->prepare($sql);
-                $state = $stateDTO->getState();
-                
-                $stmt->bindValue(1, $state["state"]);
-                $stmt->bindValue(2, $state["country_id"]);
+                $city = $cityDTO->getCity();
+                $stmt->bindValue(1, $city["city"]);
+                $stmt->bindValue(2, $city["state_id"]);
                 $returno= $stmt->execute();
                 return $returno;
             }
@@ -29,13 +28,13 @@
             }
         }
             
-        public function findByState($stateDTO) {
+        public function findByCity($cityDTO) {
            try{
-            $sql = "SELECT * FROM state WHERE state = ? and country_id = ?";
+            $sql = "SELECT * FROM city WHERE city = ? and state_id = ?";
             $stmt = $this->pdo->prepare($sql);
-            $state = $stateDTO->getState();
-            $stmt->bindValue(1, $state["state"]);
-            $stmt->bindValue(2, $state["country_id"]);
+            $city = $cityDTO->getCity();
+            $stmt->bindValue(1, $city["city"]);
+            $stmt->bindValue(2, $city["state_id"]);
             $stmt->execute();
             $returno= $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $returno;

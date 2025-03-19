@@ -18,16 +18,20 @@ class UsersDTO {
     public function setEmail($email){
         $this->email = $email;
     }
+    public function getEmail(){
+        return $this->email;
+    }
+    public function getName() { return $this->name; }
+    public function setName($name) { $this->name = $name; }
+    public function getRole() { return $this->role; }
+    public function setRole($role) { $this->role = $role; }
     public function setPassword_hash($password_hash){
         $this->password_hash = $password_hash;
     }
     public function getPassword_hash(){
         return $this->password_hash;
     }
-    public function getEmail(){
-        return $this->email;
-    }
-    public function setToken($token){
+        public function setToken($token){
         $this->token = $token;
     }
     public function getToken(){

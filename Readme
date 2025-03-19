@@ -1,0 +1,54 @@
+producoes_eventos/
+├── app/
+│   ├── Config/
+│   │   └── Database.php
+│   ├── controller/
+│   │   ├── AdminController.php
+│   │   ├── CadastroCountryController.php
+│   │   ├── CadastroUsuarioController.php
+│   │   ├── LoginController.php
+│   │   ├── OrganizerController.php
+│   │   ├── RedefineSenhaController.php
+│   │   └── UserController.php
+│   └── model/
+│       ├── DAO/
+│       │   ├── Address.php
+│       │   ├── City.php
+│       │   ├── Country.php
+│       │   ├── Event.php
+│       │   ├── State.php
+│       │   ├── Street.php
+│       │   ├── Ticket.php
+│       │   └── Users.php
+│       └── DTO/
+│       │   ├── AddressService.php
+│       │   ├── CityService.php
+│       │   ├── CountryService.php
+│       │   ├── EventService.php
+│       │   ├── StateService.php
+│       │   ├── StreetService.php
+│       │   ├── TicketService.php
+│       │   └── UsersService.php
+├── public/
+│   ├── assets/
+│   │   ├── css/
+│   │   │   ├── styles.css
+│   │   ├── js/
+│   │   │   ├── scripts.js
+│   │   └── img/
+│   └── index.php
+├── views/
+│   ├── admin/
+│   │   └── adminDashboard.php
+│   ├── organizer/
+│   │   └── organizerDashboard.php
+│   ├── user/
+│   │   └── userDashboard.php
+│   └── partials/
+│       ├── header.php
+│       └── footer.php
+│    ├── CadastroCountry.php
+│    ├── CadastroUsuario.php
+│    ├── login.php
+│    ├── logout.php
+│    ├── resetPassword.php
