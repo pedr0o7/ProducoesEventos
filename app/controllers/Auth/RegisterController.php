@@ -3,7 +3,7 @@ namespace app\Controllers\Auth;
 
 use app\core\Controller;
 use app\models\services\RegistrationService;
-
+use app\models\entities\Users;
 class RegisterController extends Controller {
     private $registrationService;
 
@@ -16,13 +16,14 @@ class RegisterController extends Controller {
     }
 
     public function register() {
-        $userData = [
-            'name' => $_POST['name'],
-            'email' => $_POST['email'],
-            'password' => $_POST['password']
-        ];
+        $user = new Users;
+        // [
+        //     'name' => $_POST['name'],
+        //     'email' => $_POST['email'],
+        //     'password' => $_POST['password']
+        // ];
 
-        if ($this->registrationService->registerUser($userData)) {
+        if ($this->registrationService->registerUser($user)) {
             $this->redirect('/user/dashboard');
         } else {
             $this->render('auth/register', ['error' => 'Erro no cadastro']);
