@@ -1,11 +1,19 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+require __DIR__ . '/../app/autoload.php'; // Substitui todos os requires
 require __DIR__ . '/../app/Config/constants.php';
+// Caminhos absolutos corrigidos
+require __DIR__ . '/../app/core/View.php';
+require __DIR__ . '/../app/core/Router.php';
+require __DIR__ . '/../app/core/Session.php';
+// require __DIR__ . '/../app/Config/constants.php';
 
 session_start();
 
 use app\core\Router;
-use app\core\Session;
+
 
 // Rotas
 require __DIR__ . '/../app/Config/Routes.php';
