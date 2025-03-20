@@ -1,75 +1,13 @@
 <?php
-class UsersDTO {
-    public $id;
-    public $name;
-    public $email;
-    public $password_hash;
-    public $role;
-    public $address_id;
-    public $token;
-    public $expires_at;
+namespace app\models\entities;
 
-    public function setId($id){
-        $this->id = $id;
-    }
-    public function getId(){
-        return $this->id;
-    }
-    public function setEmail($email){
-        $this->email = $email;
-    }
-    public function getEmail(){
-        return $this->email;
-    }
-    public function getName() { return $this->name; }
-    public function setName($name) { $this->name = $name; }
-    public function getRole() { return $this->role; }
-    public function setRole($role) { $this->role = $role; }
-    public function setPassword_hash($password_hash){
-        $this->password_hash = $password_hash;
-    }
-    public function getPassword_hash(){
-        return $this->password_hash;
-    }
-        public function setToken($token){
-        $this->token = $token;
-    }
-    public function getToken(){
-        return $this->token;
-    }
-    public function setExpires_at($expires_at){
-        $this->expires_at = $expires_at;
-    }
-    public function getExpires_at(){
-        return $this->expires_at;
-    }
-    public function setUsers($name,$email,$password_hash, $role, $address_id,$token,$expires_at){
-        $this->name = $name;
-        $this->email = $email;
-        // $this->password_hash = password_hash($password_hash, PASSWORD_DEFAULT);
-        $this->password_hash = $password_hash;
-        $this->role = $role;
-        $this->address_id = $address_id;
-        $this->token = $token;
-        $this->expires_at = $expires_at;
-
-
-        
-
-    }
-    public function getUsers(){
-        return [
-            'name' => $this->name,
-            'email' => $this->email,
-            //'password_hash' => $this->password_hash($password_hash, PASSWORD_DEFAULT);
-            'password_hash' => $this->password_hash,
-            'role' => $this->role,
-            'address_id' => $this->address_id,
-            'token' => $this->token,
-            'expires_at' => $this->expires_at
-        ];
-    }
-
+class Users {
+    public int $user_id;
+    public string $name;
+    public string $email;
+    public string $password_hash;
+    public string $role;
+    public \DateTime $created_at;
+    public \DateTime $updated_at;
+    public int $address_id;
 }
-?>
-

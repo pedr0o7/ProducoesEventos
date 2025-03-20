@@ -1,52 +1,16 @@
-<?php 
+<?php
+namespace app\models\repositories;
 
-    require_once "Database.php";
-    require_once "../model/DTO/CityDTO.php";
-    class CityDAO{
-        //ativar conexão com banco
-        //cadastrar pais
-        //listar pais
-        //buscar pais por nome
-        public $pdo = null;
+use app\models\entities\City;
 
-        public function __construct(){
-            $this->pdo = Database::getInstance();
-        }
-
-        public function cadastrarCity(CityDTO $cityDTO){
-            try{
-                $sql = "INSERT INTO city (city, state_id) VALUES (?,?)";
-                $stmt = $this->pdo->prepare($sql);
-                $city = $cityDTO->getCity();
-                $stmt->bindValue(1, $city["city"]);
-                $stmt->bindValue(2, $city["state_id"]);
-                $returno= $stmt->execute();
-                return $returno;
-            }
-            catch(PDOException $e){
-                echo "Erro: ".$e->getMessage();
-            }
-        }
-            
-        public function findByCity($cityDTO) {
-           try{
-            $sql = "SELECT * FROM city WHERE city = ? and state_id = ?";
-            $stmt = $this->pdo->prepare($sql);
-            $city = $cityDTO->getCity();
-            $stmt->bindValue(1, $city["city"]);
-            $stmt->bindValue(2, $city["state_id"]);
-            $stmt->execute();
-            $returno= $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $returno;
-
-           }
-           catch(PDOException $e){
-            echo "Erro: ".$e->getMessage();
-             }
-        }
-
-
+class CityRepository extends BaseRepository {
+    public function __construct() {
+        parent::__construct('city', City::class);
     }
 
-
-?>
+    public function findCitiesByState(int $stateId): array {
+        $sql = "SELECT * FROM city WHERE state_id = :state_id";
+        $stmt = $this->executeQuery($sql, [':state_id' => $stateId]);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, $this->entityClass);
+    }
+}

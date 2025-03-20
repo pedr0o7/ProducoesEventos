@@ -1,53 +1,16 @@
-<?php 
+<?php
+namespace app\models\repositories;
 
-    require_once "Database.php";
-    require_once "../model/DTO/StateDTO.php";
-    class StateDAO{
-        //ativar conexão com banco
-        //cadastrar pais
-        //listar pais
-        //buscar pais por nome
-        public $pdo = null;
+use app\models\entities\State;
 
-        public function __construct(){
-            $this->pdo = Database::getInstance();
-        }
-
-        public function cadastrarState(StateDTO $stateDTO){
-            try{
-                $sql = "INSERT INTO state (state, country_id) VALUES (?,?)";
-                $stmt = $this->pdo->prepare($sql);
-                $state = $stateDTO->getState();
-                
-                $stmt->bindValue(1, $state["state"]);
-                $stmt->bindValue(2, $state["country_id"]);
-                $returno= $stmt->execute();
-                return $returno;
-            }
-            catch(PDOException $e){
-                echo "Erro: ".$e->getMessage();
-            }
-        }
-            
-        public function findByState($stateDTO) {
-           try{
-            $sql = "SELECT * FROM state WHERE state = ? and country_id = ?";
-            $stmt = $this->pdo->prepare($sql);
-            $state = $stateDTO->getState();
-            $stmt->bindValue(1, $state["state"]);
-            $stmt->bindValue(2, $state["country_id"]);
-            $stmt->execute();
-            $returno= $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $returno;
-
-           }
-           catch(PDOException $e){
-            echo "Erro: ".$e->getMessage();
-             }
-        }
-
-
+class StateRepository extends BaseRepository {
+    public function __construct() {
+        parent::__construct('state', State::class);
     }
 
-
-?>
+    public function findStatesByCountry(int $countryId): array {
+        $sql = "SELECT * FROM state WHERE country_id = :country_id";
+        $stmt = $this->executeQuery($sql, [':country_id' => $countryId]);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, $this->entityClass);
+    }
+}

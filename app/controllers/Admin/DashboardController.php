@@ -1,23 +1,22 @@
 <?php
-require_once '../model/DAO/UsersDAO.php';
-require_once '../model/DAO/EventDAO.php';
+namespace app\Controllers\Admin;
 
-class AdminController {
-    private $usersDAO;
-    private $eventDAO;
+use app\core\Controller;
+use app\models\repositories\EventRepository;
+use app\models\repositories\UsersRepository;
 
-    public function __construct() {
-        $this->usersDAO = new UsersDAO();
-        $this->eventDAO = new EventDAO();
-    }
-
-    public function dashboard() {
+class DashboardController extends Controller {
+    public function index() {
+        // Dados para o dashboard admin
+        $eventRepo = new EventRepository();
+        $userRepo = new UsersRepository();
+        
         $data = [
-            'totalUsers' => $this->usersDAO->getTotalUsers(),
-            'totalEvents' => $this->eventDAO->getTotalEvents(),
-            'users' => $this->usersDAO->getAllUsers()
+            'totalEvents' => $eventRepo->count(),
+            'totalUsers' => $userRepo->count(),
+            'recentEvents' => $eventRepo->getRecent(5)
         ];
         
-        require_once '../views/admin/dashboard.php';
+        $this->render('admin/adminDashboard', $data);
     }
 }

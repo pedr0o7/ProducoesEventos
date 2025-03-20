@@ -1,32 +1,9 @@
-<?php 
+<?php
+namespace app\models\entities;
 
-    class AddressDTO{
-        public $id;
-        public $address;
-        public $city_id;
-        public $zip_code;
-
-        public function setId($id){
-            $this->id = $id;
-        }
-        public function getId(){
-            return $this->id;
-        }
-
-        
-        public function setAddress($address,$zip_code,$city_id){
-            $this->address = $address;
-            $this->zip_code = $zip_code;
-            $this->city_id = $city_id;
-
-        }
-        public function getAddress(){
-            return [
-                'address' => $this->address,
-                'zip_code' => $this->zip_code,
-                'city_id' => $this->city_id
-            ];
-        }
-    }
-
-?>
+class Address {
+    public int $address_id;
+    public string $address;
+    public string $zip_code;
+    public int $city_id;
+}

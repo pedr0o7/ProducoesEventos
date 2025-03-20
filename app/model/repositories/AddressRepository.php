@@ -1,53 +1,25 @@
-<?php 
+<?php
+namespace app\models\repositories;
 
-    require_once "Database.php";
-    require_once "../model/DTO/AddressDTO.php";
-    class AddressDAO{
-        //ativar conexão com banco
-        //cadastrar pais
-        //listar pais
-        //buscar pais por nome
-        public $pdo = null;
+use app\models\entities\Address;
 
-        public function __construct(){
-            $this->pdo = Database::getInstance();
-        }
-
-        public function cadastrarAddress(AddressDTO $addressDTO){
-            try{
-                $sql = "INSERT INTO address (address, zip_code, city_id) VALUES (?,?,?)";
-                $stmt = $this->pdo->prepare($sql);
-                $address = $addressDTO->getAddress();
-                $stmt->bindValue(1, $address["address"]);
-                $stmt->bindValue(2, $address["zip_code"]);
-                $stmt->bindValue(3, $address["city_id"]);
-                $returno= $stmt->execute();
-                return $returno;
-            }
-            catch(PDOException $e){
-                echo "Erro: ".$e->getMessage();
-            }
-        }
-            
-        public function findByAddress($addressDTO) {
-           try{
-            $sql = "SELECT * FROM address WHERE zip_code = ? and city_id =?";
-            $stmt = $this->pdo->prepare($sql);
-            $address = $addressDTO->getAddress();
-            $stmt->bindValue(1, $address["zip_code"]);
-            $stmt->bindValue(2, $address["city_id"]);
-            $stmt->execute();
-            $returno= $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $returno;
-            // $stmt->fetch(PDO::FETCH_ASSOC);
-           }
-           catch(PDOException $e){
-            echo "Erro: ".$e->getMessage();
-             }
-        }
-
-
+class AddressRepository extends BaseRepository {
+    public function __construct() {
+        parent::__construct('address', Address::class);
     }
 
-
-?>
+    public function findByZipCode(string $zipCode): ?Address {
+        $sql = "SELECT * FROM address WHERE zip_code = :zip_code";
+        $stmt = $this->executeQuery($sql, [':zip_code' => $zipCode]);
+        return $stmt->fetchObject($this->entityClass) ?: null;
+    }
+    public function create(Address $address): bool {
+        $sql = "INSERT INTO address (address, zip_code, city_id)
+                VALUES (:address, :zip, :city)";
+        return $this->executeQuery($sql, [
+            ':address' => $address->address,
+            ':zip' => $address->zip_code,
+            ':city' => $address->city_id
+        ])->rowCount() > 0;
+    }
+}

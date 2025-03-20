@@ -1,31 +1,21 @@
 <?php
-require_once '../model/DAO/EventDAO.php';
-require_once '../model/DAO/TicketDAO.php';
+namespace app\Controllers\User;
 
-require_once '../model/DTO/EventDTO.php';
-require_once '../model/DTO/TicketDTO.php';
+use app\core\Controller;
+use app\models\services\TicketService;
+use app\models\repositories\TicketRepository;
 
-class UserController {
-    private $eventDAO;
-    private $ticketDAO;
+class DashboardController extends Controller {
+    private $ticketService;
+    private $ticketRepository;
 
     public function __construct() {
-        $this->eventDAO = new EventDAO();
-        $this->ticketDAO = new TicketDAO();
+        $this->ticketService = new TicketService();
+        $this->ticketRepository = new TicketRepository();
     }
 
-    public function dashboard() {
-        $data = [
-            'events' => $this->eventDAO->getAvailableEvents()
-        ];
-        require_once '../views/user/dashboard.php';
-    }
-
-    public function purchaseTicket($ticketData) {
-        $ticketDTO = new TicketDTO();
-        $ticketDTO->setEvent_id($ticketData['event_id']);
-        $ticketDTO->setUser_id($_SESSION['user_id']);
-        
-        return $this->ticketDAO->createTicket($ticketDTO);
+    public function index() {
+        $tickets = $this->ticketRepository ->getUserTickets($_SESSION['user_id']);
+        $this->render('user/userDashboard', ['tickets' => $tickets]);
     }
 }
