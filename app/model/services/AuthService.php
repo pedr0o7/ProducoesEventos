@@ -37,7 +37,7 @@ class AuthService {
         $user->password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
         $user->role = 'customer';
         
-        return $this->userRepo->createUser($user);
+        return $this->userRepo->createUsers($user);
     }
 
     public function getCurrentUser(): ?Users {

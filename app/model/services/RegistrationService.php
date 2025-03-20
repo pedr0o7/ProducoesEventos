@@ -5,6 +5,7 @@ use app\models\entities\Registration;
 use app\models\repositories\RegistrationRepository;
 use app\core\Session;
 use app\models\repositories\UsersRepository;
+use app\models\entities\Users;
 
 class RegistrationService {
     private $repo;
@@ -42,16 +43,9 @@ class RegistrationService {
         // Lógica adicional para cadastro de organizadores
         return true;
     }
-
-    public function registerUser(array $userData): bool {
-        $user = new Users();
-        $user->name = $userData['name'];
-        $user->email = $userData['email'];
-        $user->password_hash = password_hash($userData['password'], PASSWORD_DEFAULT);
-        $user->role = 'customer';
-        $user->address_id = 0; // Valor padrão ou lógica para address_id
-        
+    public function registerUser(Users $user): bool {
         return $this->userRepo->createUsers($user);
     }
+
     
 }

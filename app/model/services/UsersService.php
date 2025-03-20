@@ -16,7 +16,7 @@ class UsersService {
     }
 
     public function createUser(Users $user): bool {
-        return $this->repo->createUser($user);
+        return $this->repo->createUsers($user);
     }
 
     public function getOrganizers(): array {

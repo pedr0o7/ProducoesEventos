@@ -10,6 +10,7 @@ class ProfileService {
     private $repo;
     private $session;
     private $validator;
+    private $userRepo;
 
     public function __construct() {
         $this->repo = new ProfileRepository();
