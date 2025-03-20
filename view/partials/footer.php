@@ -1,24 +1,27 @@
-</div> <!-- Fecha container-fluid -->
-        </div> <!-- Fecha #content -->
-    </div> <!-- Fecha wrapper -->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Script para alternar a sidebar
-        document.getElementById('sidebarCollapse').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('active');
-        });
-
-        // Fechar submenus ao abrir outros
-        document.querySelectorAll('#sidebar .dropdown-toggle').forEach(function(element) {
-            element.addEventListener('click', function() {
-                document.querySelectorAll('#sidebar .collapse').forEach(function(collapse) {
-                    if (collapse !== document.getElementById(element.getAttribute('href').substring(1)) {
-                        collapse.classList.remove('show');
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+<footer class="bg-dark text-white mt-5 py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Sobre Nós</h5>
+                <p class="text-muted">Plataforma líder em gestão de eventos e vendas de ingressos.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Links Úteis</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/faq" class="text-decoration-none text-muted">FAQ</a></li>
+                    <li><a href="/terms" class="text-decoration-none text-muted">Termos de Uso</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contato</h5>
+                <ul class="list-unstyled">
+                    <li><a href="mailto:contato@eventos.com" class="text-decoration-none text-muted">contato@eventos.com</a></li>
+                    <li class="text-muted">(11) 99999-9999</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <p class="mb-0">&copy; <?= date('Y') ?> Produções & Eventos. Todos os direitos reservados.</p>
+        </div>
+    </div>
+</footer>

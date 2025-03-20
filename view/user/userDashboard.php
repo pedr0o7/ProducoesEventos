@@ -1,56 +1,54 @@
-<?php include '../partials/header.php'; ?>
+<?php View::layout('layouts.main') ?>
 
-<div class="container-fluid px-4">
-    <h2 class="mt-4 mb-4">Dashboard Administrativo</h2>
+<?php View::section('title', 'Meu Painel') ?>
+
+<?php View::section('content') ?>
+<div class="container mt-4">
+    <h1 class="mb-4">Bem-vindo, <?= View::escape(currentUser()['name']) ?></h1>
     
-    <!-- Cards de Estatísticas -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card bg-primary text-white">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    Meus Ingressos
+                </div>
                 <div class="card-body">
-                    <h5>Usuários Cadastrados</h5>
-                    <h2><?= $data['totalUsers'] ?></h2>
+                    <?php if (!empty($tickets)): ?>
+                    <div class="list-group">
+                        <?php foreach ($tickets as $ticket): ?>
+                        <div class="list-group-item">
+                            <h5><?= View::escape($ticket->event_title) ?></h5>
+                            <p class="mb-1">Tipo: <?= $ticket->type ?></p>
+                            <small class="text-muted">Data: <?= date('d/m/Y H:i', strtotime($ticket->event_date)) ?></small>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php else: ?>
+                    <div class="alert alert-info">Nenhum ingresso comprado ainda.</div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <h5>Eventos Totais</h5>
-                    <h2><?= $data['totalEvents'] ?></h2>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Lista de Usuários -->
-    <div class="card shadow">
-        <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Todos os Usuários</h5>
-        </div>
-        <div class="card-body">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Perfil</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($data['users'] as $user): ?>
-                    <tr>
-                        <td><?= $user->getUserId() ?></td>
-                        <td><?= htmlspecialchars($user->getName()) ?></td>
-                        <td><?= htmlspecialchars($user->getEmail()) ?></td>
-                        <td><?= ucfirst($user->getRole()) ?></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    Meus Dados
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Nome:</dt>
+                        <dd class="col-sm-8"><?= View::escape(currentUser()['name']) ?></dd>
+
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8"><?= View::escape(currentUser()['email']) ?></dd>
+                    </dl>
+                    <a href="/user/profile" class="btn btn-primary">
+                        Editar Perfil
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-<?php include '../partials/footer.php'; ?>
+<?php View::endSection() ?>

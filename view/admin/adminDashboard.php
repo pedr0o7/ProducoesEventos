@@ -1,50 +1,53 @@
-<?php include '../partials/header.php'; ?>
+<?php View::layout('layouts.main') ?>
 
-<div class="container-fluid px-4">
-    <h2 class="mt-4 mb-4">Dashboard Administrativo</h2>
+<?php View::section('title', 'Painel Admin') ?>
+
+<?php View::section('content') ?>
+<div class="container mt-4">
+    <h1 class="mb-4">Dashboard Administrativo</h1>
     
-    <!-- Cards de Estatísticas -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card bg-primary text-white">
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-primary shadow">
                 <div class="card-body">
-                    <h5>Usuários Cadastrados</h5>
-                    <h2><?= $data['totalUsers'] ?></h2>
+                    <h5 class="card-title text-primary">Eventos</h5>
+                    <p class="display-6"><?= $totalEvents ?></p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card bg-success text-white">
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-success shadow">
                 <div class="card-body">
-                    <h5>Eventos Totais</h5>
-                    <h2><?= $data['totalEvents'] ?></h2>
+                    <h5 class="card-title text-success">Usuários</h5>
+                    <p class="display-6"><?= $totalUsers ?></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Lista de Usuários -->
     <div class="card shadow">
-        <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Todos os Usuários</h5>
+        <div class="card-header bg-primary text-white">
+            Últimos Eventos
         </div>
         <div class="card-body">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Perfil</th>
+                        <th>Evento</th>
+                        <th>Data</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($data['users'] as $user): ?>
+                    <?php foreach ($recentEvents as $event): ?>
                     <tr>
-                        <td><?= $user->getUserId() ?></td>
-                        <td><?= htmlspecialchars($user->getName()) ?></td>
-                        <td><?= htmlspecialchars($user->getEmail()) ?></td>
-                        <td><?= ucfirst($user->getRole()) ?></td>
+                        <td><?= View::escape($event->title) ?></td>
+                        <td><?= date('d/m/Y H:i', strtotime($event->start_datetime)) ?></td>
+                        <td>
+                            <span class="badge bg-<?= $event->status === 'published' ? 'success' : 'warning' ?>">
+                                <?= $event->status ?>
+                            </span>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -52,5 +55,4 @@
         </div>
     </div>
 </div>
-
-<?php include '../partials/footer.php'; ?>
+<?php View::endSection() ?>
