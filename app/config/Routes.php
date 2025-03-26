@@ -1,19 +1,5 @@
 <?php
 use app\core\Router;
-use app\Controllers\Auth\{
-    LoginController,
-    RegisterController,
-    PasswordController
-};
-use app\Controllers\Admin\{
-    DashboardController as AdminDashboardController,
-    OrganizerController
-};
-use app\Controllers\User\{
-    DashboardController as UserDashboardController,
-    ProfileController
-};
-use app\Controllers\Events\EventController;
 
 // Rotas Públicas
 Router::get('/', [EventController::class, 'index']);
