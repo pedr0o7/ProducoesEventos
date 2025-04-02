@@ -1,38 +1,60 @@
 <?php
 use app\core\Router;
 
-// Rotas Públicas
-Router::get('/', [EventController::class, 'index']);
-Router::get('/events/(\d+)', [EventController::class, 'show']);
+// ==================================================
+// 1. Rotas Públicas
+// ==================================================
+Router::group([], function() {
+    // Página Inicial
+    Router::get('/', function() {
+        $viewPath = realpath(__DIR__.'/../../view/home.php');
+        if ($viewPath && file_exists($viewPath)) {
+            require $viewPath;
+        } else {
+            http_response_code(500);
+            die("Erro: Arquivo home.php não encontrado");
+        }
+    });
 
-// Rotas de Autenticação
-Router::get('/login', [LoginController::class, 'showLoginForm']);
-Router::post('/login', [LoginController::class, 'login']);
-Router::get('/register', [RegisterController::class, 'showRegistrationForm']);
-Router::post('/register', [RegisterController::class, 'register']);
-Router::get('/logout', [LoginController::class, 'logout']);
-Router::get('/forgot-password', [PasswordController::class, 'showLinkRequestForm']);
-Router::post('/forgot-password', [PasswordController::class, 'sendResetLinkEmail']);
-
-// Rotas Protegidas (Usuário)
-Router::group(['middleware' => 'auth'], function() {
-    Router::get('/user/dashboard', [UserDashboardController::class, 'index']);
-    Router::get('/user/profile', [ProfileController::class, 'edit']);
-    Router::put('/user/profile', [ProfileController::class, 'update']);
+    // Login
+    Router::get('/login', function() {
+        $viewPath = realpath(__DIR__.'/../../view/auth/login.php');
+        if ($viewPath && file_exists($viewPath)) {
+            require $viewPath;
+        } else {
+            http_response_code(500);
+            die("Erro: Arquivo login.php não encontrado");
+        }
+    });
 });
 
-// Rotas Administrativas
-Router::group(['prefix' => '/admin', 'middleware' => 'admin'], function() {
-    Router::get('/dashboard', [AdminDashboardController::class, 'index']);
-    Router::get('/organizers', [OrganizerController::class, 'index']);
-    Router::get('/organizers/(\d+)/approve', [OrganizerController::class, 'approve']);
+// ==================================================
+// 2. Rotas do Usuário Autenticado
+// ==================================================
+Router::group([
+    'prefix' => '/user',
+    'middleware' => 'auth'
+], function() {
+    Router::get('/dashboard', function() {
+        require realpath(__DIR__.'/../../view/user/userDashboard.php');
+    });
 });
 
-// Rotas de Erro
+// ==================================================
+// 3. Sistema de Erros (Versão Corrigida)
+// ==================================================
 Router::error(404, function() {
-    return (new ErrorController())->notFound();
+    $errorPath = realpath(__DIR__.'/../../view/errors/404.php');
+    if ($errorPath) {
+        http_response_code(404);
+        require $errorPath;
+    } else {
+        die("Página não encontrada");
+    }
+    exit;
 });
 
-Router::error(500, function() {
-    return (new ErrorController())->serverError();
-});
+// ==================================================
+// 4. Execução do Roteador
+// ==================================================
+Router::dispatch();

@@ -12,7 +12,7 @@ class LoginController extends Controller {
     }
 
     public function showLoginForm() {
-        $this->render('auth/login');
+        require __DIR__ . '../../../view/auth/login.php';
     }
 
     public function login() {
