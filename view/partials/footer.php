@@ -8,8 +8,9 @@
             <div class="col-md-4">
                 <h5>Links Úteis</h5>
                 <ul class="list-unstyled">
-                    <li><a href="/faq" class="text-decoration-none text-muted">FAQ</a></li>
-                    <li><a href="/terms" class="text-decoration-none text-muted">Termos de Uso</a></li>
+                    <!-- ⚠️ AJUSTE links com BASE_URL -->
+                    <li><a href="<?= BASE_URL ?>/faq" class="text-decoration-none text-muted">FAQ</a></li>
+                    <li><a href="<?= BASE_URL ?>/terms" class="text-decoration-none text-muted">Termos de Uso</a></li>
                 </ul>
             </div>
             <div class="col-md-4">
@@ -25,3 +26,6 @@
         </div>
     </div>
 </footer>
+
+</body>
+</html>

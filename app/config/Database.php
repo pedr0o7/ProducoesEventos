@@ -1,30 +1,31 @@
 <?php 
+class Database {
+    private static $pdo;
 
-    class Database{
-        //atributo
-        private static $pdo;
-        private function __construct(){
-            //metodo construtor
-        }
-        public static function getInstance(){
-            if(!isset(self::$pdo)){
-                try{
-                    //criando a conexão com o banco de dados
-                    $options = array(
-                        PDO::ATTR_PERSISTENT => true,
-                        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME UTF8;',
-                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-                    );
-                    self::$pdo = new PDO('mysql:host=localhost;dbname=producoes_eventos','root','');
-                    self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    private function __construct() { }
 
-                }catch(PDOException $exe){
-                    echo 'Erro ao conectar com o banco de dados: '. $exe->getMessage();
-                    die();
-                }
+    public static function getInstance() {
+        if(!isset(self::$pdo)) {
+            try {
+                $options = array(
+                    PDO::ATTR_PERSISTENT => true,
+                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8', // CORREÇÃO AQUI (removi ; e corrigi NAME para NAMES)
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                );
                 
+                self::$pdo = new PDO(
+                    'mysql:host=localhost;dbname=producoes_eventos;charset=utf8', // Adicionei charset
+                    'root',
+                    '',
+                    $options
+                );
+
+            } catch(PDOException $e) {
+                echo 'Erro ao conectar: ' . $e->getMessage();
+                die();
             }
-            return self::$pdo;
         }
+        return self::$pdo;
     }
+}
 ?>
